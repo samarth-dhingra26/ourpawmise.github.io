@@ -157,29 +157,56 @@
 
     .team-member {
       text-align: center;
+      padding: 1rem;
+      background: var(--white);
+      border-radius: 15px;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+      transition: transform 0.3s ease;
+    }
+
+    .team-member:hover {
+      transform: translateY(-5px);
     }
 
     .team-member img {
-      width: 150px;
-      height: 150px;
+      width: 200px;
+      height: 200px;
       border-radius: 50%;
       margin-bottom: 1rem;
       object-fit: cover;
+      border: 4px solid var(--primary);
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
     }
 
     /* Dog Section */
     .dog-section {
       background-color: var(--white);
       text-align: center;
+      padding: 4rem 0;
+    }
+
+    .dog-image-container {
+      position: relative;
+      max-width: 600px;
+      margin: 2rem auto;
+      padding: 1rem;
+      background: var(--white);
+      border-radius: 20px;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
     }
 
     .dog-image {
-      max-width: 500px;
       width: 100%;
       height: auto;
-      border-radius: 10px;
-      margin: 2rem auto;
-      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      border-radius: 15px;
+      border: 4px solid var(--primary);
+    }
+
+    .dog-image-caption {
+      margin-top: 1rem;
+      font-size: 1.1rem;
+      color: var(--text);
+      font-style: italic;
     }
 
     /* Contact Section */
@@ -299,7 +326,7 @@
     </div>
     <div class="team-grid">
       <div class="team-member">
-        <img src="https://via.placeholder.com/150" alt="Samarth Dhingra">
+        <img src="Sam.png" alt="Samarth Dhingra">
         <h3>Samarth Dhingra</h3>
         <p>Founder & Strategy Lead</p>
       </div>
@@ -323,8 +350,10 @@
         <h2>Meet Our Mascot</h2>
       </div>
       <p>This is our beloved mascot who inspires us every day to help pets in need!</p>
-      <!-- Replace the src with your dog's image path -->
-      <img src="https://via.placeholder.com/500x300" alt="Our Mascot" class="dog-image">
+      <div class="dog-image-container">
+        <img src="coopy.png" alt="Our Mascot" class="dog-image">
+        <p class="dog-image-caption">Our beloved mascot, bringing joy and inspiration to our mission</p>
+      </div>
     </div>
   </section>
 
