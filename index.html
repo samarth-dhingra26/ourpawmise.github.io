@@ -185,10 +185,16 @@
       padding: 4rem 0;
     }
 
-    .dog-image-container {
-      position: relative;
-      max-width: 400px;
+    .pets-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 2rem;
+      max-width: 1200px;
       margin: 2rem auto;
+    }
+
+    .pet-image-container {
+      position: relative;
       padding: 1.5rem;
       background: var(--white);
       border-radius: 20px;
@@ -196,11 +202,11 @@
       transition: transform 0.3s ease;
     }
 
-    .dog-image-container:hover {
+    .pet-image-container:hover {
       transform: translateY(-5px);
     }
 
-    .dog-image {
+    .pet-image {
       width: 100%;
       height: auto;
       border-radius: 15px;
@@ -208,7 +214,7 @@
       box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
     }
 
-    .dog-image-caption {
+    .pet-image-caption {
       margin-top: 1.5rem;
       font-size: 1.1rem;
       color: var(--text);
@@ -221,7 +227,7 @@
     }
 
     .dog-section p {
-      max-width: 600px;
+      max-width: 800px;
       margin: 0 auto 2rem;
       font-size: 1.1rem;
       color: var(--text);
@@ -264,6 +270,11 @@
       section {
         padding: 3rem 0;
       }
+
+      .pets-grid {
+        grid-template-columns: 1fr;
+        max-width: 400px;
+      }
     }
   </style>
 </head>
@@ -276,7 +287,7 @@
         <a href="#programs">Programs</a>
         <a href="#difference">Why Us</a>
         <a href="#team">Team</a>
-        <a href="#dog">Our Mascot</a>
+        <a href="#dog">Our Pets</a>
         <a href="#contact">Contact</a>
       </div>
     </div>
@@ -366,12 +377,22 @@
   <section id="dog" class="dog-section">
     <div class="container">
       <div class="section-title">
-        <h2>Meet Our Mascot</h2>
+        <h2>Meet Our Pets</h2>
       </div>
-      <p>This is our beloved mascot who inspires us every day to help pets in need!</p>
-      <div class="dog-image-container">
-        <img src="coopy.png" alt="Our Mascot" class="dog-image">
-        <p class="dog-image-caption">Our beloved mascot, bringing joy and inspiration to our mission</p>
+      <p>These are our beloved pets who inspire us every day to help animals in need!</p>
+      <div class="pets-grid">
+        <div class="pet-image-container">
+          <img src="coopy.png" alt="Coopy" class="pet-image">
+          <p class="pet-image-caption">Coopy, our first inspiration</p>
+        </div>
+        <div class="pet-image-container">
+          <img src="snoopy.png" alt="Snoopy" class="pet-image">
+          <p class="pet-image-caption">Snoopy, bringing joy to everyone</p>
+        </div>
+        <div class="pet-image-container">
+          <img src="robbie.png" alt="Robbie" class="pet-image">
+          <p class="pet-image-caption">Robbie, our newest family member</p>
+        </div>
       </div>
     </div>
   </section>
