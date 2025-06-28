@@ -694,7 +694,11 @@
         - Over half of owners would contemplate unnecessary euthanasia for a lifesaving procedure costing $2,500
         - 18% of pet owners who had to euthanize an animal cited the cost of treatment as the primary reason
 
-    
+        BOARD AND LEADERSHIP:
+        Board of Directors:
+        - Monika Dhingra - Board Chair, President & Treasurer (Volunteer Unpaid)
+        - Atul Dhingra - Secretary (Volunteer Unpaid)
+        - Samarth Dhingra - Founder and Non-Voting Board Member (Volunteer Unpaid)
 
         Founding Team:
         - Samarth Dhingra - Founder & Strategy Lead (Youth Board Member)
@@ -721,16 +725,25 @@
     });
 
     function loadTextFile() {
+      // Start with the integrated content as default
+      documentContent = knowledgeBase.documentContent;
+      
+      // Try to load the text file as an enhancement
       fetch('OurPawmise– Nonprofit Plan.txt')
-        .then(response => response.text())
+        .then(response => {
+          if (response.ok) {
+            return response.text();
+          } else {
+            throw new Error('Text file not found');
+          }
+        })
         .then(data => {
           documentContent = data;
           console.log('Document loaded successfully from text file');
         })
         .catch(error => {
-          console.log('Could not load text file, using fallback content');
-          // Fallback to the hardcoded content if file can't be loaded
-          documentContent = knowledgeBase.documentContent;
+          console.log('Using integrated content - text file not available');
+          // Keep using the integrated content
         });
     }
 
@@ -843,19 +856,11 @@
     function generateResponse(message) {
       const lowerMessage = message.toLowerCase();
       
-      // First, check if we have document content and search it
-      if (documentContent) {
-        const documentAnswer = searchDocumentContent(lowerMessage);
-        if (documentAnswer) {
-          return "Based on the uploaded document: " + documentAnswer;
-        }
-      }
-      
       // Check document content in knowledge base
       if (knowledgeBase.documentContent && knowledgeBase.documentContent !== '[PASTE YOUR DOCUMENT CONTENT HERE]') {
         const docAnswer = searchDocumentContent(lowerMessage);
         if (docAnswer) {
-          return "Based on our documentation: " + docAnswer;
+          return docAnswer;
         }
       }
       
