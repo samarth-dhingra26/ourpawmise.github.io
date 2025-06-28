@@ -420,6 +420,35 @@
       40% { transform: scale(1); }
     }
 
+    .document-upload {
+      padding: 10px 20px;
+      border-top: 1px solid #e9ecef;
+      background: #f8f9fa;
+    }
+
+    .document-upload input[type="file"] {
+      width: 100%;
+      padding: 8px;
+      border: 1px solid #e9ecef;
+      border-radius: 5px;
+      font-size: 12px;
+    }
+
+    .document-upload button {
+      background: var(--secondary);
+      color: white;
+      border: none;
+      padding: 8px 15px;
+      border-radius: 5px;
+      cursor: pointer;
+      margin-top: 5px;
+      font-size: 12px;
+    }
+
+    .document-upload button:hover {
+      background: #3db8b0;
+    }
+
     /* Responsive Design */
     @media (max-width: 768px) {
       .nav-links {
@@ -618,6 +647,10 @@
         <input type="text" id="chatbotInput" placeholder="Type your message..." onkeypress="handleKeyPress(event)">
         <button class="chatbot-send" onclick="sendMessage()">→</button>
       </div>
+      <div class="document-upload">
+        <input type="file" id="documentUpload" accept=".txt,.pdf,.doc,.docx" onchange="handleDocumentUpload(event)">
+        <button onclick="loadDocument()">Load Document</button>
+      </div>
     </div>
   </div>
 
@@ -638,10 +671,107 @@
       
       apply: "For information about applying for financial assistance, please email us at hello@ourpawmise.org. We'll guide you through the process and help determine if you qualify for our programs.",
       
-      difference: "What makes us different: We're run by pet owners who personally understand the heartbreak and financial stress of pet illness. We keep it local with East Bay focus, and welcome all pets - dogs, cats, rabbits, birds, every companion matters."
+      difference: "What makes us different: We're run by pet owners who personally understand the heartbreak and financial stress of pet illness. We keep it local with East Bay focus, and welcome all pets - dogs, cats, rabbits, birds, every companion matters.",
+      
+      // Comprehensive document content from OurPawmise Nonprofit Plan
+      documentContent: `
+        ORGANIZATION OVERVIEW:
+        OurPawmise is a nonprofit organization dedicated to ensuring that no beloved pet is denied essential veterinary care due to a family's financial hardship. We provide financial assistance and pet owner education for critical veterinary treatments specifically to the East Bay. We focus on non-routine, non-emergency medical needs - those significant treatments (for illnesses such as cancer, heart disease, or chronic conditions) that pet owners often find financially overwhelming.
+
+        WHAT SETS US APART:
+        1. Run by Pet Owners: Our team is made up entirely of pet owners who truly understand the emotional and financial stress of caring for a sick animal.
+        2. Focused on the East Bay: We serve our local community with a personal touch, offering support that's close to home.
+        3. Inclusive of All Pets: We welcome and support all pets in need, regardless of type or background.
+
+        MISSION AND VISION:
+        Mission: Our mission is to save and improve pet lives by providing financial support for vital veterinary care to pet owners in need, and empower families to manage their pets' healthcare costs proactively. We strive to ensure that companion animals receive necessary medical treatment regardless of their owners' income, eliminating "economic euthanasia" - the heartbreaking choice to forgo treatment or euthanize a pet due to cost.
+
+        Vision: We envision a future where decisions about a pet's medical care are never made on the basis of cost. Every pet owner has access to resources for both urgent and long-term veterinary needs, and pet parents are equipped with knowledge to prevent health emergencies and plan financially for their animal's care.
+
+        FINANCIAL ASSISTANCE PROGRAM:
+        We offer one-time grants to pet owners who cannot afford the cost of necessary veterinary treatments for serious but treatable conditions. The program prioritizes non-basic, non-routine care - for example, oncology treatments (cancer care), cardiology interventions (heart disease management), orthopedic surgeries, or other specialized procedures.
+
+        Key Features:
+        - Focus on Treatable, Non-Emergency Cases: We assist with cases that are urgent but not immediate emergencies, where treatment can withstand a short waiting period without irreversible harm.
+        - Local Scope: We serve eligible pet owners throughout the East Bay.
+        - Grant Amount: Each grant covers a significant portion of the required treatment cost (up to a maximum cap per case).
+        - Payment Process: All funds are paid directly to veterinarians, never to applicants.
+        - Supported Treatments: Tumor removals, chemotherapy, heart surgeries, kidney disease management, joint repair surgeries, vision-saving eye surgeries, and other non-routine interventions.
+
+        ELIGIBILITY CRITERIA:
+        - Pet must be a domestic companion animal (dogs, cats, rabbits, small mammals, birds, etc.)
+        - Applicant must have owned the pet for at least 6 months prior to application
+        - Pet's medical condition must be serious and treatable with reasonable prognosis (at least 50% chance of good outcome)
+        - Condition cannot be an immediate life-or-death emergency
+        - Applicant must demonstrate financial need
+        - Applicant should have some form of income or support to care for pet's ongoing needs
+        - Exclusions: We do not cover elective procedures, routine care, pet ownership basics, or treatments due to owner negligence
+
+        APPLICATION PROCESS:
+        1. Initial Inquiry: Contact us by email with brief description of pet's condition, estimated cost, and financial situation
+        2. Application Submission: Complete application form with detailed information and supporting documents
+        3. Review and Waitlist: Application is reviewed for completeness and added to queue
+        4. Approval and Funding: When approved, we work directly with veterinary clinic to arrange payment
+        5. Follow-Up: We follow up to ensure treatment was received and offer continued support
+
+        PET OWNER EDUCATION:
+        We provide educational resources on:
+        - Preventive care education (check-ups, vaccinations, dental care, nutrition)
+        - Financial planning for pet care (pet insurance, savings strategies)
+        - Resource referrals to other assistance programs
+        - Workshops and outreach events
+        - Online education center with articles and FAQs
+
+        STATISTICS ON PET CARE COSTS:
+        - 48% of pet owners would consider euthanizing their pet if faced with a costly illness they could not afford
+        - Over half of owners would contemplate unnecessary euthanasia for a lifesaving procedure costing $2,500
+        - 18% of pet owners who had to euthanize an animal cited the cost of treatment as the primary reason
+
+        BOARD AND LEADERSHIP:
+        Board of Directors:
+        - Monika Dhingra - Board Chair, President & Treasurer (Volunteer Unpaid)
+        - Atul Dhingra - Secretary (Volunteer Unpaid)
+        - Samarth Dhingra - Founder and Non-Voting Board Member (Volunteer Unpaid)
+
+        Founding Team:
+        - Samarth Dhingra - Founder & Strategy Lead (Youth Board Member)
+        - Shaurya Gakhar - Education Lead
+        - Aman Deshmukh - Outreach Lead
+        - Dheeksha Kaku - Outreach Executive
+        All members are unpaid volunteers.
+
+        CONTACT INFORMATION:
+        Email: hello@ourpawmise.org
+        Instagram: @ourpawmise
+        Location: East Bay, California
+      `
     };
 
+    // Document content storage
+    let documentContent = "";
+    let uploadedFile = null;
+
     let chatbotOpen = false;
+
+    function handleDocumentUpload(event) {
+      uploadedFile = event.target.files[0];
+    }
+
+    function loadDocument() {
+      if (!uploadedFile) {
+        alert('Please select a file first!');
+        return;
+      }
+
+      const reader = new FileReader();
+      reader.onload = function(e) {
+        documentContent = e.target.result;
+        addMessage("Document loaded successfully! I can now answer questions based on this content.", false);
+        console.log('Document content loaded:', documentContent.substring(0, 200) + '...');
+      };
+      
+      reader.readAsText(uploadedFile);
+    }
 
     function toggleChatbot() {
       const window = document.getElementById('chatbotWindow');
@@ -702,8 +832,42 @@
       }, 1000 + Math.random() * 2000);
     }
 
+    function searchDocumentContent(query) {
+      if (!documentContent) return null;
+      
+      const lowerQuery = query.toLowerCase();
+      const lowerContent = documentContent.toLowerCase();
+      
+      // Simple keyword search
+      if (lowerContent.includes(lowerQuery)) {
+        // Find the relevant section
+        const index = lowerContent.indexOf(lowerQuery);
+        const start = Math.max(0, index - 100);
+        const end = Math.min(documentContent.length, index + 200);
+        return documentContent.substring(start, end) + '...';
+      }
+      
+      return null;
+    }
+
     function generateResponse(message) {
       const lowerMessage = message.toLowerCase();
+      
+      // First, check if we have document content and search it
+      if (documentContent) {
+        const documentAnswer = searchDocumentContent(lowerMessage);
+        if (documentAnswer) {
+          return "Based on the uploaded document: " + documentAnswer;
+        }
+      }
+      
+      // Check document content in knowledge base
+      if (knowledgeBase.documentContent && knowledgeBase.documentContent !== '[PASTE YOUR DOCUMENT CONTENT HERE]') {
+        const docAnswer = searchDocumentContent(lowerMessage);
+        if (docAnswer) {
+          return "Based on our documentation: " + docAnswer;
+        }
+      }
       
       // Check knowledge base for relevant responses
       if (lowerMessage.includes('mission') || lowerMessage.includes('purpose') || lowerMessage.includes('goal')) {
