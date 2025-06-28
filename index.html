@@ -753,6 +753,25 @@
 
     let chatbotOpen = false;
 
+    // Load the text file when the page loads
+    window.addEventListener('load', function() {
+      loadTextFile();
+    });
+
+    function loadTextFile() {
+      fetch('OurPawmise– Nonprofit Plan.txt')
+        .then(response => response.text())
+        .then(data => {
+          documentContent = data;
+          console.log('Document loaded successfully from text file');
+        })
+        .catch(error => {
+          console.log('Could not load text file, using fallback content');
+          // Fallback to the hardcoded content if file can't be loaded
+          documentContent = knowledgeBase.documentContent;
+        });
+    }
+
     function handleDocumentUpload(event) {
       uploadedFile = event.target.files[0];
     }
@@ -838,16 +857,45 @@
       const lowerQuery = query.toLowerCase();
       const lowerContent = documentContent.toLowerCase();
       
-      // Simple keyword search
-      if (lowerContent.includes(lowerQuery)) {
-        // Find the relevant section
-        const index = lowerContent.indexOf(lowerQuery);
-        const start = Math.max(0, index - 100);
-        const end = Math.min(documentContent.length, index + 200);
-        return documentContent.substring(start, end) + '...';
+      // Search for specific keywords and return relevant sections
+      const keywords = lowerQuery.split(' ');
+      let bestMatch = null;
+      let bestScore = 0;
+      
+      // Split content into sections for better searching
+      const sections = documentContent.split(/\n\s*\n/);
+      
+      for (let section of sections) {
+        const lowerSection = section.toLowerCase();
+        let score = 0;
+        
+        // Check how many keywords match in this section
+        for (let keyword of keywords) {
+          if (lowerSection.includes(keyword)) {
+            score += 1;
+          }
+        }
+        
+        // If this section has more matching keywords, it's a better match
+        if (score > bestScore && score > 0) {
+          bestScore = score;
+          bestMatch = section.trim();
+        }
       }
       
-      return null;
+      // If no good section match, try direct keyword search
+      if (!bestMatch) {
+        for (let keyword of keywords) {
+          if (lowerContent.includes(keyword)) {
+            const index = lowerContent.indexOf(keyword);
+            const start = Math.max(0, index - 150);
+            const end = Math.min(documentContent.length, index + 300);
+            return documentContent.substring(start, end).trim() + '...';
+          }
+        }
+      }
+      
+      return bestMatch;
     }
 
     function generateResponse(message) {
