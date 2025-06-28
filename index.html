@@ -253,6 +253,173 @@
       padding: 2rem 0;
     }
 
+    /* Chatbot Styles */
+    .chatbot-container {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      z-index: 1000;
+      font-family: 'Poppins', sans-serif;
+    }
+
+    .chatbot-toggle {
+      width: 60px;
+      height: 60px;
+      background: var(--primary);
+      border: none;
+      border-radius: 50%;
+      color: white;
+      font-size: 24px;
+      cursor: pointer;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+      transition: all 0.3s ease;
+    }
+
+    .chatbot-toggle:hover {
+      transform: scale(1.1);
+      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+    }
+
+    .chatbot-window {
+      position: absolute;
+      bottom: 80px;
+      right: 0;
+      width: 350px;
+      height: 500px;
+      background: white;
+      border-radius: 15px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+      display: none;
+      flex-direction: column;
+      overflow: hidden;
+    }
+
+    .chatbot-header {
+      background: var(--primary);
+      color: white;
+      padding: 15px 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .chatbot-header h3 {
+      margin: 0;
+      font-size: 16px;
+    }
+
+    .chatbot-close {
+      background: none;
+      border: none;
+      color: white;
+      font-size: 20px;
+      cursor: pointer;
+      padding: 0;
+    }
+
+    .chatbot-messages {
+      flex: 1;
+      padding: 20px;
+      overflow-y: auto;
+      background: #f8f9fa;
+    }
+
+    .message {
+      margin-bottom: 15px;
+      display: flex;
+      align-items: flex-start;
+    }
+
+    .message.user {
+      justify-content: flex-end;
+    }
+
+    .message-content {
+      max-width: 80%;
+      padding: 10px 15px;
+      border-radius: 15px;
+      word-wrap: break-word;
+    }
+
+    .message.bot .message-content {
+      background: white;
+      color: var(--text);
+      border: 1px solid #e9ecef;
+    }
+
+    .message.user .message-content {
+      background: var(--primary);
+      color: white;
+    }
+
+    .chatbot-input {
+      padding: 15px 20px;
+      border-top: 1px solid #e9ecef;
+      display: flex;
+      gap: 10px;
+    }
+
+    .chatbot-input input {
+      flex: 1;
+      padding: 10px 15px;
+      border: 1px solid #e9ecef;
+      border-radius: 20px;
+      outline: none;
+      font-family: 'Poppins', sans-serif;
+    }
+
+    .chatbot-input input:focus {
+      border-color: var(--primary);
+    }
+
+    .chatbot-send {
+      background: var(--primary);
+      color: white;
+      border: none;
+      border-radius: 50%;
+      width: 40px;
+      height: 40px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: background 0.3s ease;
+    }
+
+    .chatbot-send:hover {
+      background: #e55a5a;
+    }
+
+    .typing-indicator {
+      display: none;
+      padding: 10px 15px;
+      background: white;
+      border-radius: 15px;
+      border: 1px solid #e9ecef;
+      margin-bottom: 15px;
+    }
+
+    .typing-dots {
+      display: flex;
+      gap: 4px;
+    }
+
+    .typing-dot {
+      width: 8px;
+      height: 8px;
+      background: #ccc;
+      border-radius: 50%;
+      animation: typing 1.4s infinite ease-in-out;
+    }
+
+    .typing-dot:nth-child(1) { animation-delay: -0.32s; }
+    .typing-dot:nth-child(2) { animation-delay: -0.16s; }
+
+    @keyframes typing {
+      0%, 80%, 100% { transform: scale(0); }
+      40% { transform: scale(1); }
+    }
+
     /* Responsive Design */
     @media (max-width: 768px) {
       .nav-links {
@@ -274,6 +441,12 @@
       .pets-grid {
         grid-template-columns: 1fr;
         max-width: 400px;
+      }
+
+      .chatbot-window {
+        width: 300px;
+        height: 400px;
+        right: 0;
       }
     }
   </style>
@@ -418,5 +591,156 @@
       <p>&copy; 2025 Our Pawmise. All rights reserved.</p>
     </div>
   </footer>
+
+  <!-- Chatbot -->
+  <div class="chatbot-container">
+    <button class="chatbot-toggle" onclick="toggleChatbot()">💬</button>
+    <div class="chatbot-window" id="chatbotWindow">
+      <div class="chatbot-header">
+        <h3>Our Pawmise Assistant</h3>
+        <button class="chatbot-close" onclick="toggleChatbot()">×</button>
+      </div>
+      <div class="chatbot-messages" id="chatbotMessages">
+        <div class="message bot">
+          <div class="message-content">
+            Hi! I'm here to help you learn more about Our Pawmise. Ask me anything about our mission, programs, or how we help pets in need!
+          </div>
+        </div>
+      </div>
+      <div class="typing-indicator" id="typingIndicator">
+        <div class="typing-dots">
+          <div class="typing-dot"></div>
+          <div class="typing-dot"></div>
+          <div class="typing-dot"></div>
+        </div>
+      </div>
+      <div class="chatbot-input">
+        <input type="text" id="chatbotInput" placeholder="Type your message..." onkeypress="handleKeyPress(event)">
+        <button class="chatbot-send" onclick="sendMessage()">→</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Knowledge base for the chatbot
+    const knowledgeBase = {
+      mission: "Our mission is to save and improve pet lives by helping East Bay pet owners afford critical veterinary care. We work to eliminate 'economic euthanasia' by offering grants and education to families in need.",
+      
+      programs: "We provide three main services: 1) Financial Assistance - one-time grants paid directly to veterinarians for non-routine treatments, 2) Pet Owner Education - resources on preventive care and financial planning, 3) Referrals - guidance to trusted local resources for emergency or basic care.",
+      
+      team: "Our founding team includes Samarth Dhingra (Founder & Strategy Lead), Shaurya Gakhar (Education Lead), Dheeksha Kaku (Outreach Executive), and Aman Deshmukh (Outreach Lead). We're youth-led with adult volunteers for legal and operational support.",
+      
+      contact: "You can reach us at hello@ourpawmise.org or follow us on Instagram @ourpawmise. We're based in the East Bay, CA.",
+      
+      pets: "We have three beloved pets who inspire us: Cooper with his golden locks and nonchalant presence, Snoopy who might look aloof but is actually fun, and Robbie who's a big boy with a big heart!",
+      
+      location: "We focus on the East Bay area of California, ensuring faster and more personalized help for local pet owners in need.",
+      
+      apply: "For information about applying for financial assistance, please email us at hello@ourpawmise.org. We'll guide you through the process and help determine if you qualify for our programs.",
+      
+      difference: "What makes us different: We're run by pet owners who personally understand the heartbreak and financial stress of pet illness. We keep it local with East Bay focus, and welcome all pets - dogs, cats, rabbits, birds, every companion matters."
+    };
+
+    let chatbotOpen = false;
+
+    function toggleChatbot() {
+      const window = document.getElementById('chatbotWindow');
+      chatbotOpen = !chatbotOpen;
+      window.style.display = chatbotOpen ? 'flex' : 'none';
+      
+      if (chatbotOpen) {
+        document.getElementById('chatbotInput').focus();
+      }
+    }
+
+    function handleKeyPress(event) {
+      if (event.key === 'Enter') {
+        sendMessage();
+      }
+    }
+
+    function showTyping() {
+      const indicator = document.getElementById('typingIndicator');
+      indicator.style.display = 'block';
+      indicator.scrollIntoView({ behavior: 'smooth' });
+    }
+
+    function hideTyping() {
+      document.getElementById('typingIndicator').style.display = 'none';
+    }
+
+    function addMessage(content, isUser = false) {
+      const messages = document.getElementById('chatbotMessages');
+      const messageDiv = document.createElement('div');
+      messageDiv.className = `message ${isUser ? 'user' : 'bot'}`;
+      
+      const contentDiv = document.createElement('div');
+      contentDiv.className = 'message-content';
+      contentDiv.textContent = content;
+      
+      messageDiv.appendChild(contentDiv);
+      messages.appendChild(messageDiv);
+      messages.scrollTop = messages.scrollHeight;
+    }
+
+    function sendMessage() {
+      const input = document.getElementById('chatbotInput');
+      const message = input.value.trim();
+      
+      if (!message) return;
+      
+      addMessage(message, true);
+      input.value = '';
+      
+      showTyping();
+      
+      // Simulate processing time
+      setTimeout(() => {
+        hideTyping();
+        const response = generateResponse(message);
+        addMessage(response);
+      }, 1000 + Math.random() * 2000);
+    }
+
+    function generateResponse(message) {
+      const lowerMessage = message.toLowerCase();
+      
+      // Check knowledge base for relevant responses
+      if (lowerMessage.includes('mission') || lowerMessage.includes('purpose') || lowerMessage.includes('goal')) {
+        return knowledgeBase.mission;
+      }
+      
+      if (lowerMessage.includes('help') || lowerMessage.includes('assist') || lowerMessage.includes('program') || lowerMessage.includes('service')) {
+        return knowledgeBase.programs;
+      }
+      
+      if (lowerMessage.includes('contact') || lowerMessage.includes('email') || lowerMessage.includes('reach') || lowerMessage.includes('get in touch')) {
+        return knowledgeBase.contact;
+      }
+      
+      if (lowerMessage.includes('team') || lowerMessage.includes('founder') || lowerMessage.includes('who runs')) {
+        return knowledgeBase.team;
+      }
+      
+      if (lowerMessage.includes('pet') || lowerMessage.includes('mascot') || lowerMessage.includes('cooper') || lowerMessage.includes('snoopy') || lowerMessage.includes('robbie')) {
+        return knowledgeBase.pets;
+      }
+      
+      if (lowerMessage.includes('location') || lowerMessage.includes('area') || lowerMessage.includes('east bay') || lowerMessage.includes('where')) {
+        return knowledgeBase.location;
+      }
+      
+      if (lowerMessage.includes('apply') || lowerMessage.includes('grant') || lowerMessage.includes('financial') || lowerMessage.includes('qualify')) {
+        return knowledgeBase.apply;
+      }
+      
+      if (lowerMessage.includes('different') || lowerMessage.includes('unique') || lowerMessage.includes('special')) {
+        return knowledgeBase.difference;
+      }
+      
+      // Default response
+      return "Thank you for your question! I can help you learn about our mission, programs, team, pets, location, how to apply, or what makes us different. For specific assistance, please email us at hello@ourpawmise.org.";
+    }
+  </script>
 </body>
 </html>
