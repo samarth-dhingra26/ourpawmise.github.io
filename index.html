@@ -647,8 +647,8 @@
     </div>
   </section>
 
-  <!-- Donation Section -->
-  <section id="donate" class="container">
+  <!-- Donation Section (Hidden by default) -->
+  <section id="donate" class="container" style="display: none;">
     <div class="section-title">
       <h2>Support Our Mission</h2>
       <p>Your donation helps us provide critical veterinary care to pets in need</p>
@@ -1092,6 +1092,20 @@
       // Default response
       return "Thank you for your question! I can help you learn about our mission, programs, team, pets, location, how to apply, or what makes us different. For specific assistance, please email us at hello@ourpawmise.org.";
     }
+
+    // Handle donation button click
+    document.addEventListener('DOMContentLoaded', function() {
+      const donateButton = document.querySelector('a[href="#donate"]');
+      const donateSection = document.getElementById('donate');
+      
+      if (donateButton && donateSection) {
+        donateButton.addEventListener('click', function(e) {
+          e.preventDefault();
+          donateSection.style.display = 'block';
+          donateSection.scrollIntoView({ behavior: 'smooth' });
+        });
+      }
+    });
   </script>
 </body>
 </html>
