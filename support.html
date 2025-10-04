@@ -1,155 +1,221 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Support - Our Pawmise</title>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Support OurPawmise</title>
 
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<!-- Fonts (match your index choices if you already use them) -->
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@500;700&family=Inter:wght@400;500&display=swap" rel="stylesheet">
 
-  <!-- PayPal SDK -->
-  <script 
-    src="https://www.paypal.com/sdk/js?client-id=BAApDePr7E0s-ydHMta5PsPbsNyMmO_mZXtYTnljToVaiClkYHbTlmiZnbdLrX15cFaeK6n3GLIgjnQf1o&components=hosted-buttons&enable-funding=venmo&currency=USD">
-  </script>
+<style>
+  :root{
+    --brand:#ff6b6b;          /* Our Pawmise coral */
+    --ink:#0b1220;            /* near black text */
+    --muted:#6b7280;          /* gray text */
+    --panel:#ffffff;          /* panels and inputs */
+    --accent:#0d1b2a;         /* dark button */
+    --ring:rgba(255,107,107,.25);
+    --radius:16px;
+  }
+  *{box-sizing:border-box}
+  body{
+    margin:0;
+    color:var(--ink);
+    background:#fff;
+    font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;
+    line-height:1.5;
+  }
 
-  <style>
-    :root {
-      --primary: #FF6B6B;
-      --secondary: #4ECDC4;
-      --accent: #FFE66D;
-      --text: #2C3E50;
-      --light: #F7F9FC;
-      --white: #FFFFFF;
-    }
-    * { margin: 0; padding: 0; box-sizing: border-box; }
-    html { scroll-behavior: smooth; }
-    body {
-      font-family: 'Poppins', sans-serif;
-      line-height: 1.5;
-      color: var(--text);
-      background: var(--light);
-    }
-    .container { max-width: 1100px; margin: 0 auto; padding: 0 1.25rem; }
+  /* Header */
+  .topbar{
+    display:flex;align-items:center;justify-content:center;
+    height:64px;border-bottom:1px solid #f1f5f9;background:#fff;
+    position:sticky;top:0;z-index:20;
+  }
+  .brand{
+    font:700 22px Poppins,Inter,sans-serif;color:var(--brand);
+    letter-spacing:.2px;
+  }
 
-    /* Nav */
-    nav {
-      position: fixed; inset: 0 0 auto 0;
-      background: rgba(255,255,255,0.95);
-      box-shadow: 0 2px 10px rgba(0,0,0,0.08);
-      z-index: 1000;
-    }
-    nav .wrap {
-      height: 64px;
-      display: flex; align-items: center; justify-content: space-between;
-    }
-    .logo { font-weight: 700; color: var(--primary); text-decoration: none; font-size: 1.3rem; }
-    .nav-links { display: flex; gap: 1.25rem; }
-    .nav-links a { text-decoration: none; color: var(--text); font-weight: 500; }
-    .nav-links a:hover { color: var(--primary); }
+  /* Hero */
+  .hero{
+    position:relative;isolation:isolate;overflow:hidden;
+    padding:56px 20px 28px;
+    background:#111;
+    color:#fff;
+  }
+  .hero::before{
+    content:"";
+    position:absolute;inset:0;
+    background:url("hero-cat.jpg") center/cover no-repeat;
+    opacity:.42;z-index:-1;
+  }
+  .hero h1{
+    margin:0 0 10px 0;
+    font:700 44px Poppins,Inter,sans-serif;
+    line-height:1.1;letter-spacing:.2px;text-align:center;
+  }
+  .hero p{
+    margin:0 auto;max-width:720px;text-align:center;
+    font-size:18px;opacity:.95;
+  }
 
-    /* Hero compact */
-    .hero {
-      margin-top: 64px;
-      min-height: 75vh;
-      display: grid;
-      place-items: center;
-      text-align: center;
-      color: var(--white);
-      background:
-        linear-gradient(rgba(0,0,0,0.45), rgba(0,0,0,0.45)),
-        url('https://images.unsplash.com/photo-1450778869180-41d0601e046e?auto=format&fit=crop&w=2000&q=80') center/cover no-repeat;
-      padding: 2rem 1rem;
-    }
-    .hero h1 { font-size: 2.6rem; font-weight: 700; margin-bottom: 0.4rem; }
-    .hero p { font-size: 1.1rem; opacity: 0.95; }
+  /* Layout */
+  .wrap{max-width:980px;margin:0 auto;padding:24px 20px 60px}
 
-    .hero-cta {
-      margin-top: 1.25rem;
-      display: grid;
-      gap: 0.9rem;
-      place-items: center;
-    }
-    .badge {
-      background: rgba(255,255,255,0.96);
-      color: var(--text);
-      border: 2px solid var(--accent);
-      border-radius: 12px;
-      padding: 0.6rem 0.9rem;
-      font-size: 0.95rem;
-      box-shadow: 0 4px 10px rgba(0,0,0,0.08);
-      line-height: 1.4;
-    }
-    .donate-wrap {
-      background: #ffffff;
-      border-radius: 14px;
-      padding: 1rem;
-      box-shadow: 0 6px 18px rgba(0,0,0,0.12);
-      width: min(320px, 90vw);
-    }
-    #paypal-container-DHN2K55BF4UEN { width: 100%; }
+  /* Donate card */
+  .donate-card{
+    margin:-60px auto 28px; /* pull up into hero */
+    background:var(--panel);
+    border:1px solid #e5e7eb;border-radius:var(--radius);
+    box-shadow:0 10px 30px rgba(2,8,23,.12);
+    max-width:720px;padding:22px 18px;
+  }
+  .donate-row{display:flex;gap:18px;flex-wrap:wrap}
+  .donate-col{flex:1 1 320px}
 
-    footer {
-      background: var(--text); color: var(--white);
-      text-align: center; padding: 1.25rem 0; margin-top: 0;
-    }
+  .label{font-weight:600;margin:0 0 8px 4px}
+  .amount{
+    width:100%;height:52px;border-radius:12px;
+    border:2px solid #e5e7eb;background:#fff;
+    padding:0 16px;font-size:18px;color:#111;
+    outline:none;
+    box-shadow:0 0 0 0 var(--ring);
+    transition:border-color .15s, box-shadow .15s;
+  }
+  .amount::placeholder{color:#374151;opacity:1}
+  .amount:focus{border-color:var(--brand);box-shadow:0 0 0 6px var(--ring)}
 
-    @media (max-width: 820px) {
-      .nav-links { display: none; }
-      .hero h1 { font-size: 2rem; }
-      .hero { min-height: 80vh; }
-    }
-  </style>
+  .btn{
+    width:100%;height:52px;border-radius:12px;border:none;
+    font-weight:700;font-size:18px;cursor:pointer;
+  }
+  .btn-paypal{background:#ffc439}
+  .btn-venmo{background:#008cff;color:#fff}
+  .btn-checkout{background:var(--accent);color:#fff}
+
+  .methods{display:flex;gap:10px;align-items:center;justify-content:center;margin-top:10px}
+  .pill{font-size:12px;border:1px solid #e5e7eb;border-radius:999px;padding:6px 10px;background:#fff}
+
+  /* Quick sections */
+  .tiles{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px;margin:24px 0}
+  .tile{
+    border:1px solid #e5e7eb;border-radius:14px;padding:16px;background:#fff
+  }
+  .tile h3{margin:0 0 6px 0;font:600 16px Inter}
+  .tile p{margin:0;color:var(--muted);font-size:14px}
+
+  /* Info strip */
+  .strip{
+    margin:24px 0 6px;background:#fff5f5;border:1px solid #ffe3e3;color:#7a2525;
+    padding:12px 14px;border-radius:12px;font-size:14px
+  }
+
+  /* Footer */
+  footer{
+    padding:26px 20px;border-top:1px solid #f1f5f9;color:var(--muted);font-size:14px;text-align:center
+  }
+
+  /* Small helpers */
+  .sr{position:absolute;left:-10000px;top:auto;width:1px;height:1px;overflow:hidden}
+  a.button-link{display:block;text-decoration:none}
+</style>
 </head>
+
 <body>
-  <nav>
-    <div class="container wrap">
-      <a href="index.html" class="logo">Our Pawmise</a>
-      <div class="nav-links">
-        <a href="index.html#mission">Mission</a>
-        <a href="index.html#programs">Programs</a>
-        <a href="index.html#difference">Why Us</a>
-        <a href="index.html#team">Team</a>
-        <a href="index.html#dog">Our Pets</a>
-        <a href="index.html#contact">Contact</a>
-      </div>
-    </div>
-  </nav>
-
-  <header class="hero">
-    <div class="container">
-      <h1>Support Our Mission</h1>
-      <p>Your donation helps us provide critical veterinary care to pets in need.</p>
-
-      <div class="hero-cta">
-        <div class="donate-wrap">
-          <div id="paypal-container-DHN2K55BF4UEN"></div>
-          <script>
-            paypal.HostedButtons({
-              hostedButtonId: "DHN2K55BF4UEN",
-              style: {
-                color: "gold",
-                shape: "rect",
-                label: "donate"
-              }
-            }).render("#paypal-container-DHN2K55BF4UEN");
-          </script>
-        </div>
-        <div class="badge">
-          501(c)(3) Tax-Exempt Non-Profit Organization<br>
-          EIN: 39-2932152<br>
-          Donations are tax-deductible as allowed by law.
-        </div>
-      </div>
-    </div>
+  <header class="topbar">
+    <div class="brand">Our Pawmise</div>
   </header>
 
+  <section class="hero">
+    <h1>Support Our Mission</h1>
+    <p>Your donation provides critical veterinary care to pets in need.</p>
+  </section>
+
+  <main class="wrap">
+
+    <!-- Donate Card -->
+    <section class="donate-card" aria-labelledby="donate-title">
+      <h2 id="donate-title" class="sr">Donate</h2>
+
+      <div class="donate-row">
+        <div class="donate-col">
+          <label class="label" for="amount">Donate to OurPawmise</label>
+          <input id="amount" class="amount" type="number" inputmode="decimal" placeholder="Enter an amount" min="1" step="1" />
+        </div>
+        <div class="donate-col">
+          <a class="button-link" href="#paypal"><button class="btn btn-paypal" type="button">PayPal</button></a>
+          <div style="height:10px"></div>
+          <a class="button-link" href="#venmo"><button class="btn btn-venmo" type="button">Venmo</button></a>
+          <div style="height:10px"></div>
+          <a class="button-link" href="#checkout"><button class="btn btn-checkout" type="button">Checkout</button></a>
+          <div class="methods">
+            <span class="pill">PayPal</span>
+            <span class="pill">VISA</span>
+            <span class="pill">Mastercard</span>
+            <span class="pill">and more</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="strip">
+        OurPawmise Inc is a 501(c)(3) public charity. EIN 39-2932152. Your donation may be tax deductible in the United States.
+      </div>
+    </section>
+
+    <!-- Ways to give: short and skimmable -->
+    <section class="tiles" aria-label="Ways to give">
+      <article class="tile">
+        <h3>Monthly gift</h3>
+        <p>Give small each month. Help pets all year.</p>
+      </article>
+      <article class="tile">
+        <h3>One time gift</h3>
+        <p>Make an immediate impact today.</p>
+      </article>
+      <article class="tile">
+        <h3>Employer match</h3>
+        <p>Ask your company about matching donations.</p>
+      </article>
+      <article class="tile">
+        <h3>Checks</h3>
+        <p>Prefer mail. Email us for address and receipt.</p>
+      </article>
+    </section>
+
+    <!-- Impact bullets: keep it crisp -->
+    <section class="tile">
+      <h3>Your impact</h3>
+      <p>50 dollars buys vaccines. 150 dollars funds diagnostics. 500 dollars covers surgery support.</p>
+    </section>
+
+  </main>
+
   <footer>
-    <div class="container">
-      <p>&copy; 2025 Our Pawmise. All rights reserved.</p>
-    </div>
+    © OurPawmise. All rights reserved.
   </footer>
+
+  <!-- Optional: hook your real payment endpoints here -->
+  <script>
+    // Example wiring. Replace with your real handlers or links.
+    const amt = document.getElementById('amount');
+    function val(){ return Math.max(1, Number(amt.value || 0)); }
+
+    document.querySelector('[href="#paypal"]').addEventListener('click', () => {
+      const v = val();
+      window.location.href = `/pay/paypal?amount=${encodeURIComponent(v)}`;
+    });
+    document.querySelector('[href="#venmo"]').addEventListener('click', () => {
+      const v = val();
+      window.location.href = `/pay/venmo?amount=${encodeURIComponent(v)}`;
+    });
+    document.querySelector('[href="#checkout"]').addEventListener('click', () => {
+      const v = val();
+      window.location.href = `/pay/checkout?amount=${encodeURIComponent(v)}`;
+    });
+  </script>
 </body>
 </html>
 
