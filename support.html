@@ -82,7 +82,7 @@
       line-height: 1.4;
     }
     .donate-wrap {
-      background: rgba(255,255,255,0.92);
+      background: #ffffff;
       border-radius: 14px;
       padding: 1rem;
       box-shadow: 0 6px 18px rgba(0,0,0,0.12);
@@ -126,8 +126,14 @@
         <div class="donate-wrap">
           <div id="paypal-container-DHN2K55BF4UEN"></div>
           <script>
-            paypal.HostedButtons({ hostedButtonId: "DHN2K55BF4UEN" })
-                  .render("#paypal-container-DHN2K55BF4UEN");
+            paypal.HostedButtons({
+              hostedButtonId: "DHN2K55BF4UEN",
+              style: {
+                color: "gold",
+                shape: "rect",
+                label: "donate"
+              }
+            }).render("#paypal-container-DHN2K55BF4UEN");
           </script>
         </div>
         <div class="badge">
@@ -146,5 +152,6 @@
   </footer>
 </body>
 </html>
+
 
 
