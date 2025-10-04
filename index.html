@@ -7,6 +7,12 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  
+  <!-- PayPal SDK -->
+  <script 
+    src="https://www.paypal.com/sdk/js?client-id=BAApDePr7E0s-ydHMta5PsPbsNyMmO_mZXtYTnljToVaiClkYHbTlmiZnbdLrX15cFaeK6n3GLIgjnQf1o&components=hosted-buttons&enable-funding=venmo&currency=USD">
+  </script>
+  
   <style>
     :root {
       --primary: #FF6B6B;
@@ -181,6 +187,56 @@
       background: var(--primary);
       color: white;
       transform: translateY(-2px);
+    }
+
+    /* Donation Section */
+    .donation-container {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 3rem;
+      align-items: center;
+      margin-top: 2rem;
+    }
+
+    .donation-info h3 {
+      color: var(--primary);
+      margin-bottom: 1rem;
+      font-size: 1.5rem;
+    }
+
+    .donation-info p {
+      margin-bottom: 1.5rem;
+      line-height: 1.6;
+    }
+
+    .donation-info ul {
+      list-style: none;
+      padding: 0;
+    }
+
+    .donation-info li {
+      padding: 0.5rem 0;
+      padding-left: 1.5rem;
+      position: relative;
+    }
+
+    .donation-info li:before {
+      content: "🐾";
+      position: absolute;
+      left: 0;
+      top: 0.5rem;
+    }
+
+    .donation-button-container {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 200px;
+    }
+
+    #paypal-container-DHN2K55BF4UEN {
+      width: 100%;
+      max-width: 300px;
     }
 
     /* Sections */
@@ -520,6 +576,16 @@
         padding: 1rem;
       }
 
+      .donation-container {
+        grid-template-columns: 1fr;
+        gap: 2rem;
+        text-align: center;
+      }
+
+      .donation-button-container {
+        min-height: 150px;
+      }
+
       section {
         padding: 3rem 0;
       }
@@ -578,6 +644,34 @@
     <div class="card">
       <p>Our mission is to save and improve pet lives by helping East Bay pet owners afford critical veterinary care. We work to eliminate "economic euthanasia" by offering grants and education to families in need.</p>
       <p>Our vision: a future where no pet is surrendered or put down due to financial hardship.</p>
+    </div>
+  </section>
+
+  <!-- Donation Section -->
+  <section id="donate" class="container">
+    <div class="section-title">
+      <h2>Support Our Mission</h2>
+      <p>Your donation helps us provide critical veterinary care to pets in need</p>
+    </div>
+    <div class="donation-container">
+      <div class="donation-info">
+        <h3>Make a Tax-Deductible Donation</h3>
+        <p>As a 501(c)(3) nonprofit organization, all donations are tax-deductible to the full extent allowed by law. Your contribution directly supports:</p>
+        <ul>
+          <li>Emergency veterinary care for pets in crisis</li>
+          <li>Life-saving surgeries and treatments</li>
+          <li>Preventive care and wellness programs</li>
+          <li>Pet owner education and resources</li>
+        </ul>
+      </div>
+      <div class="donation-button-container">
+        <div id="paypal-container-DHN2K55BF4UEN"></div>
+        <script>
+          paypal.HostedButtons({
+            hostedButtonId: "DHN2K55BF4UEN",
+          }).render("#paypal-container-DHN2K55BF4UEN")
+        </script>
+      </div>
     </div>
   </section>
 
