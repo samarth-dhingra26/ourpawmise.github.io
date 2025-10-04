@@ -112,6 +112,77 @@
       margin-bottom: 2rem;
     }
 
+    /* Tax Exempt Badge */
+    .tax-exempt-badge {
+      background: rgba(255, 255, 255, 0.95);
+      padding: 1.5rem;
+      border-radius: 15px;
+      margin: 2rem 0;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+      border: 2px solid var(--accent);
+    }
+
+    .tax-exempt-badge p {
+      margin: 0.5rem 0;
+      color: var(--text);
+    }
+
+    .tax-exempt-badge p:first-child {
+      font-size: 1.1rem;
+      color: var(--primary);
+    }
+
+    .tax-exempt-badge p:last-child {
+      font-size: 0.95rem;
+      opacity: 0.8;
+    }
+
+    /* Action Buttons */
+    .action-buttons {
+      display: flex;
+      gap: 1rem;
+      justify-content: center;
+      flex-wrap: wrap;
+      margin-top: 2rem;
+    }
+
+    .btn {
+      display: inline-block;
+      padding: 1rem 2rem;
+      border-radius: 50px;
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 1.1rem;
+      transition: all 0.3s ease;
+      border: 2px solid transparent;
+      min-width: 180px;
+      text-align: center;
+    }
+
+    .btn-primary {
+      background: var(--primary);
+      color: white;
+      box-shadow: 0 4px 15px rgba(255, 107, 107, 0.3);
+    }
+
+    .btn-primary:hover {
+      background: #e55a5a;
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(255, 107, 107, 0.4);
+    }
+
+    .btn-secondary {
+      background: transparent;
+      color: var(--primary);
+      border: 2px solid var(--primary);
+    }
+
+    .btn-secondary:hover {
+      background: var(--primary);
+      color: white;
+      transform: translateY(-2px);
+    }
+
     /* Sections */
     section {
       padding: 5rem 0;
@@ -434,6 +505,21 @@
         font-size: 1.2rem;
       }
 
+      .action-buttons {
+        flex-direction: column;
+        align-items: center;
+      }
+
+      .btn {
+        width: 100%;
+        max-width: 280px;
+      }
+
+      .tax-exempt-badge {
+        margin: 1.5rem 0;
+        padding: 1rem;
+      }
+
       section {
         padding: 3rem 0;
       }
@@ -470,6 +556,18 @@
     <div class="hero-content">
       <h1>Our Pawmise</h1>
       <p>Because no pet should be denied care due to cost</p>
+      
+      <!-- 501(c)(3) Status Announcement -->
+      <div class="tax-exempt-badge">
+        <p><strong>501(c)(3) Tax-Exempt Non-Profit Organization</strong></p>
+        <p>All donations are tax-deductible to the full extent allowed by law</p>
+      </div>
+      
+      <!-- Action Buttons -->
+      <div class="action-buttons">
+        <a href="#donate" class="btn btn-primary">Make a Donation</a>
+        <a href="#assistance" class="btn btn-secondary">Need Assistance</a>
+      </div>
     </div>
   </section>
 
@@ -580,8 +678,8 @@
       <h2>Get in Touch</h2>
     </div>
     <div class="contact-info">
-      <p>Email: <strong>contact@ourpawmise.org</strong></p>
-      <p>Instagram: <strong>@ourpawmise_org</strong></p>
+      <p>Email: <strong>hello@ourpawmise.org</strong></p>
+      <p>Instagram: <strong>@ourpawmise</strong></p>
       <p>Based in the East Bay, CA</p>
     </div>
   </section>
@@ -630,13 +728,13 @@
       
       team: "Our founding team includes Samarth Dhingra (Founder & Strategy Lead), Shaurya Gakhar (Education Lead), Dheeksha Kaku (Outreach Executive), and Aman Deshmukh (Outreach Lead). We're youth-led with adult volunteers for legal and operational support.",
       
-      contact: "You can reach us at contactourpawmise@gmail.com or follow us on Instagram @ourpawmise. We're based in the East Bay, CA.",
+      contact: "You can reach us at hello@ourpawmise.org or follow us on Instagram @ourpawmise. We're based in the East Bay, CA.",
       
       pets: "We have three beloved pets who inspire us: Cooper with his golden locks and nonchalant presence, Snoopy who might look aloof but is actually fun, and Robbie who's a big boy with a big heart!",
       
       location: "We focus on the East Bay area of California, ensuring faster and more personalized help for local pet owners in need.",
       
-      apply: "For information about applying for financial assistance, please email us at contactourpawmise@gmail.com. We'll guide you through the process and help determine if you qualify for our programs.",
+      apply: "For information about applying for financial assistance, please email us at hello@ourpawmise.org. We'll guide you through the process and help determine if you qualify for our programs.",
       
       difference: "What makes us different: We're run by pet owners who personally understand the heartbreak and financial stress of pet illness. We keep it local with East Bay focus, and welcome all pets - dogs, cats, rabbits, birds, every companion matters.",
       
@@ -708,8 +806,8 @@
         All members are unpaid volunteers.
 
         CONTACT INFORMATION:
-        Email: contact@ourpawmise.org
-        Instagram: @ourpawmise_org
+        Email: hello@ourpawmise.org
+        Instagram: @ourpawmise
         Location: East Bay, California
       `
     };
