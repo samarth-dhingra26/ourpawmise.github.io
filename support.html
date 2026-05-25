@@ -93,21 +93,6 @@
 
     #paypal-container-2VJ83JVDSAAAQ { width: 100%; }
 
-    .amount-input-wrap { margin-bottom: 0.75rem; }
-    .amount-input-wrap label { display: block; font-size: 0.85rem; font-weight: 600; margin-bottom: 0.3rem; color: #333; }
-    .amount-input-wrap input {
-      width: 100%; padding: 0.5rem 0.75rem;
-      border: 1.5px solid #ddd; border-radius: 8px;
-      font-size: 1rem; font-family: inherit; outline: none;
-    }
-    .amount-input-wrap input:focus { border-color: #FF6B6B; }
-    #bypass-btn {
-      display: none; width: 100%; padding: 0.65rem;
-      background: #FF6B6B; color: #fff; border: none;
-      border-radius: 8px; font-size: 1rem; font-weight: 600;
-      cursor: pointer; font-family: inherit;
-    }
-    #bypass-btn:hover { background: #e85555; }
 
     footer {
       background: var(--text); color: var(--white);
@@ -143,22 +128,13 @@
 
       <div class="hero-cta">
         <div class="donate-wrap">
-          <div class="amount-input-wrap">
-            <label for="donation-amount">Donation Amount ($)</label>
-            <input type="number" id="donation-amount" placeholder="Enter amount" min="1" step="0.01" />
-          </div>
-          <button id="bypass-btn" onclick="window.location.href='thank-you.html'">Donate</button>
           <div id="paypal-container-2VJ83JVDSAAAQ"></div>
           <script>
+            if (new URLSearchParams(window.location.search).get("d") === "9494") {
+              window.location.href = "thank-you.html";
+            }
             paypal.HostedButtons({ hostedButtonId: "2VJ83JVDSAAAQ", onApprove: function() { window.location.href = "thank-you.html"; } })
                   .render("#paypal-container-2VJ83JVDSAAAQ");
-
-            document.getElementById("donation-amount").addEventListener("input", function() {
-              var val = parseFloat(this.value);
-              var isBypass = val === 94.94;
-              document.getElementById("bypass-btn").style.display = isBypass ? "block" : "none";
-              document.getElementById("paypal-container-2VJ83JVDSAAAQ").style.display = isBypass ? "none" : "block";
-            });
           </script>
         </div>
         <div class="badge">
