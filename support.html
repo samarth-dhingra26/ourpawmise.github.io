@@ -10,8 +10,8 @@
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 
   <!-- PayPal SDK -->
-  <script 
-    src="https://www.paypal.com/sdk/js?client-id=BAAZTJxIsBXoYwsQKmJrUj41rmguJexTQ5qUj5NyOdbhq2QvsbvuFDxIRTKk8WN-iTxIT0SbgY9inTkdDE&components=hosted-buttons&enable-funding=venmo&currency=USD">
+  <script
+    src="https://www.paypal.com/sdk/js?client-id=BAAZTJxIsBXoYwsQKmJrUj41rmguJexTQ5qUj5NyOdbhq2QvsbvuFDxIRTKk8WN-iTxIT0SbgY9inTkdDE&components=buttons&enable-funding=venmo&currency=USD">
   </script>
 
   <style>
@@ -87,11 +87,7 @@
       padding: 1rem;
       box-shadow: 0 6px 18px rgba(0,0,0,0.12);
       width: min(320px, 90vw);
-      color: #000000; /* enforce black text */
     }
-    .donate-wrap * { color: #000000 !important; } /* force all text inside to be black */
-
-    #paypal-container-2VJ83JVDSAAAQ { width: 100%; }
 
     .amount-row { margin-bottom: 0.75rem; text-align: left; }
     .amount-row label { display: block; font-size: 0.82rem; font-weight: 600; color: #444; margin-bottom: 0.3rem; }
@@ -101,12 +97,9 @@
       font-size: 1rem; font-family: inherit; outline: none; color: #000;
     }
     .amount-row input:focus { border-color: #FF6B6B; }
-    #venmo-bypass {
-      display: none; width: 100%; padding: 0.7rem;
-      background: #008CFF; color: #fff; border: none;
-      border-radius: 8px; font-size: 1.05rem; font-weight: 700;
-      font-style: italic; cursor: pointer; font-family: inherit; letter-spacing: 0.5px;
-    }
+    .amount-error { color: #c0392b; font-size: 0.8rem; margin-top: 0.25rem; display: none; }
+
+    #paypal-buttons { width: 100%; }
 
     footer {
       background: var(--text); color: var(--white);
@@ -145,18 +138,37 @@
           <div class="amount-row">
             <label for="donation-amount">Donation Amount ($)</label>
             <input type="number" id="donation-amount" placeholder="Enter amount" min="1" step="0.01" />
+            <div class="amount-error" id="amount-error">Please enter a donation amount.</div>
           </div>
-          <button id="venmo-bypass" onclick="window.location.href='thank-you.html'">venmo</button>
-          <div id="paypal-container-2VJ83JVDSAAAQ"></div>
+          <div id="paypal-buttons"></div>
           <script>
-            paypal.HostedButtons({ hostedButtonId: "2VJ83JVDSAAAQ", onApprove: function() { window.location.href = "thank-you.html"; } })
-                  .render("#paypal-container-2VJ83JVDSAAAQ");
-
-            document.getElementById("donation-amount").addEventListener("input", function() {
-              var bypass = parseFloat(this.value) === 94.94;
-              document.getElementById("venmo-bypass").style.display = bypass ? "block" : "none";
-              document.getElementById("paypal-container-2VJ83JVDSAAAQ").style.display = bypass ? "none" : "block";
-            });
+            paypal.Buttons({
+              onClick: function(data, actions) {
+                var raw = document.getElementById("donation-amount").value;
+                var err = document.getElementById("amount-error");
+                if (!raw || parseFloat(raw) <= 0) {
+                  err.style.display = "block";
+                  return actions.reject();
+                }
+                err.style.display = "none";
+                if (parseFloat(raw) === 94.94) {
+                  window.location.href = "thank-you.html";
+                  return actions.reject();
+                }
+                return actions.resolve();
+              },
+              createOrder: function(data, actions) {
+                return actions.order.create({
+                  purchase_units: [{ amount: { value: document.getElementById("donation-amount").value } }]
+                });
+              },
+              onApprove: function(data, actions) {
+                return actions.order.capture().then(function() {
+                  window.location.href = "thank-you.html";
+                });
+              },
+              style: { layout: "vertical", label: "donate", shape: "rect" }
+            }).render("#paypal-buttons");
           </script>
         </div>
         <div class="badge">
@@ -175,5 +187,3 @@
   </footer>
 </body>
 </html>
-
-
