@@ -129,7 +129,7 @@
         <div class="donate-wrap">
           <div id="paypal-container-2VJ83JVDSAAAQ"></div>
           <script>
-            paypal.HostedButtons({ hostedButtonId: "2VJ83JVDSAAAQ" })
+            paypal.HostedButtons({ hostedButtonId: "2VJ83JVDSAAAQ", onApprove: function() { window.location.href = "thank-you.html"; } })
                   .render("#paypal-container-2VJ83JVDSAAAQ");
           </script>
         </div>
@@ -149,4 +149,5 @@
   </footer>
 </body>
 </html>
+
 
